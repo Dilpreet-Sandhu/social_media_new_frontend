@@ -35,6 +35,7 @@ const LoginForm = () => {
       const res = await axios.post("http://localhost:4000/api/users/sign-in",data,{withCredentials : true});
 
       if (res.data.data.success) {
+        console.log(res?.data?.data?.data);
         toast("you are logged in succesfully",{type : "success"});
         dispatch(setUser(res?.data?.data?.data));
       }

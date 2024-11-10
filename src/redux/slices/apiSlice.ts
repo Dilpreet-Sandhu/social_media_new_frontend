@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:4000/api" }),
+  tagTypes : ["post"],
   endpoints: (builder) => ({
     fetchUser: builder.query<any, string>({
       query: (userId) => ({
@@ -31,6 +32,7 @@ const api = createApi({
         method: "GET",
         credentials: "include",
       }),
+      providesTags : ["post"]
     }),
     getLikedPostIds: builder.query<any, void>({
       query: () => ({
@@ -84,6 +86,45 @@ const api = createApi({
         body : {postId,content : comment,commentId,type}
       })
     }),
+    getExploreFeed : builder.query<any,void>({
+      query : () => ({
+        url : "/post/get/explore/feed",
+        method : "GET",
+        credentials : "include"
+      })
+    }),
+    getFeedReels : builder.query<any,void>({
+      query : () => ({
+        url : `/post/get/feed/reels`,
+        method : "GET",
+        credentials : "include",
+      })
+    }),
+
+    getUserChats : builder.query<any,void>({
+      query : () => ({
+        url : "/chat/c/get",
+        method : 'GET',
+        credentials : "include"
+      })
+    }),
+    createChat : builder.mutation<any,any>({
+      query : (otherUserId) => ({
+        url : "/chat/ng/create",
+        method : 'POST',
+        body : {otherUserId},
+        credentials : "include",
+      })
+    })
+,
+    getChatDetails : builder.query<any,any>({
+      query : (chatId) => ({
+        url : `/chat/get/${chatId}`,
+        method : "GET",
+        credentials : "include",
+      })
+    })
+    
 
   }),
 });
@@ -99,7 +140,12 @@ export const {
   useGetSavedPostIdsQuery,
   useAddCommentMutation,
   useGetCommentsOnPostQuery,
-  useGetSinglePostQuery
+  useGetSinglePostQuery,
+  useGetExploreFeedQuery,
+  useGetFeedReelsQuery,
+  useGetUserChatsQuery,
+  useCreateChatMutation,
+  useGetChatDetailsQuery
 } = api;
 
 export default api;

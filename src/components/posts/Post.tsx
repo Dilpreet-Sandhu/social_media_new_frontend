@@ -8,7 +8,7 @@ import {
   Share2Icon,
 } from "lucide-react";
 import { MouseEvent, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Input } from "../auth/Input";
 import Button from "../Button";
 
@@ -41,6 +41,7 @@ const Post = ({
 }) => {
   const [comment, setComment] = useState("");
 
+  const navigate = useNavigate();
 
 
   return (
@@ -99,7 +100,7 @@ const Post = ({
                 className={`cursor-pointer`}
               />
 
-              <MessageCircle className="cursor-pointer stroke-gray-600" />
+              <MessageCircle onClick={() => navigate(`/p/${post?._id}`)} className="cursor-pointer stroke-gray-600" />
 
               <Share2Icon className="cursor-pointer stroke-gray-600" />
             </div>

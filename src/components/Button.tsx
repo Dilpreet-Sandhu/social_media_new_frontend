@@ -1,3 +1,6 @@
+import {ButtonHTMLAttributes} from "react";
+
+
 const Button = ({
   type,
   text,
@@ -5,13 +8,17 @@ const Button = ({
   onClick,
   buttonType,
   height,
-}: {
+  bg,
+  ...props
+}: ButtonHTMLAttributes<HTMLButtonElement> &  {
   type?: "button" | "reset" | "submit";
   text: string;
-  width: string;
+  width?: string;
   onClick?: () => void;
-  buttonType: "bgfilled" | "outline";
+  buttonType: "bgfilled" | "outline" | "profile";
   height?: string;
+  props? : any,
+  bg ?: string;
 }) => {
   if (buttonType == "bgfilled") {
     return (
@@ -35,6 +42,10 @@ const Button = ({
         <p>{text}</p>
       </button>
     );
+  }else if (buttonType === "profile") {
+    return (
+      <button {...props} style={{background : bg}} onClick={onClick} className='w-[120px] h-[35px] text-[14px]   flex items-center justify-center text-black/70  cursor-pointer bg-gray-200 rounded-xl'>{text}</button>
+    )
   }
 };
 

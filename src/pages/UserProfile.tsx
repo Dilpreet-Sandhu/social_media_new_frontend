@@ -8,6 +8,8 @@ import Loading from '../loaders/Loading';
 import { useState } from 'react';
 import { BatteryWarning, Bookmark, Grid } from 'lucide-react';
 import Posts from '../components/userProfile/Posts';
+import { Skeleton } from '@mui/material';
+import { useAppSelector } from '@/redux/store';
 
 const UserProfile = () => {
 
@@ -15,14 +17,14 @@ const UserProfile = () => {
     const {userId} = useParams();
 
     const [showPosts,setShowPosts] = useState("posts");
-     
+    const {user : myUser} = useAppSelector(state => state.user);
 
     const {user,loading,isError} = useGetUserById(userId as string);
 
 
-    console.log(user);
 
-    if (loading) return <Loading/>
+
+    if (loading) return <Skeleton/>
 
     if (isError) return <div><BatteryWarning/> some error occured</div>
 
@@ -39,10 +41,16 @@ const UserProfile = () => {
             <p>POSTS</p>
         </span>
 
+        {
+          myUser?._id === user?._id && (
+            
         <span onClick={() => setShowPosts("savedPosts")} style={{color : showPosts == "savedPosts" ? "black" :"#3f3f46"}} className={`flex gap-2  text-[13px] h-[40px] cursor-pointer text-zinc-700 items-center`}>
-            <Bookmark className='w-[20px] h-[20px]'/>
-            <p>SAVED POSTS</p>
-        </span>
+        <Bookmark className='w-[20px] h-[20px]'/>
+        <p>SAVED POSTS</p>
+    </span>
+          )
+        }
+
 
     </div>
 

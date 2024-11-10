@@ -10,13 +10,12 @@ export default function Posts({userId,showPosts} : {userId : string,showPosts : 
 
     const {data : savedPostsData} = useGetSavedPostQuery();
 
-    console.log(data);
     
 
   return (
     <div className="w-full ">
       {
-        loading ? <Loading/> : showPosts === "posts" ? <PostsList posts={data?.data}/>  : <PostsList posts={savedPostsData?.data?.posts}/>
+        loading ? <Loading/> : showPosts === "posts" ?  <PostsList posts={data?.data}/>  : <PostsList posts={savedPostsData?.data?.posts}/>
       }
 
      

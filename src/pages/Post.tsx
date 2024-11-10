@@ -1,13 +1,15 @@
-import { MouseEvent, ReactNode } from "react";
-import { useParams } from "react-router-dom"
+import { MouseEvent } from "react";
+import { useNavigate, useParams } from "react-router-dom"
 import { useGetSinglePostQuery } from "../redux/slices/apiSlice";
 import PostInfo from "../components/singlePost/PostInfo";
+import {  X } from "lucide-react";
 
 
 const FullViewPost = () => {
 
    const params = useParams();
    const postId = params.postId;
+   const navigate = useNavigate();
   
     const {data,isLoading,isError} = useGetSinglePostQuery({postId : postId || ""});
 
@@ -24,20 +26,33 @@ const FullViewPost = () => {
 
     }
 
+    const isImage = data?.data?.post?.url.split(".").at(-1) == "png" ? true : false;
+
 
   return (
-    <div
-    className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+    <div  onClick={() => navigate(-1)}
+    className="fixed z-10 inset-0 bg-black bg-opacity-50 flex justify-center items-center"
  // To close modal on background click
   >
-    <div
-      className="bg-white  rounded-lg h-[660px] max-w-[900px] flex w-full"
+
+    <div className="absolute top-5 right-5">
+      <span onClick={() => navigate(-1)}  className="w-[30px] h-[30px] cursor-pointer rounded-full border-[2px] border-black flex items-center justify-center">
+      <X/>
+      </span>
+    </div>
+
+    <div  onClick={(e) => e.stopPropagation()}
+      className="bg-white absolute z-20 rounded-lg h-[660px] max-w-[900px] flex w-full"
 // Prevents modal content click from closing modal
     >
 
       <div className="w-1/2 flex items-center justify-center h-full border-r-[3px] border-zinc-200">
-
-        <video autoPlay onClick={handlePlay} src={data?.data?.post?.url}/>
+        {
+       
+        isImage ? <img src={data?.data?.post?.url}/> : (
+          <video autoPlay onClick={handlePlay} src={data?.data?.post?.url}/>
+        )
+        }
 
       </div>
 

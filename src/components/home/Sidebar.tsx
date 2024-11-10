@@ -11,6 +11,8 @@ import {
 import { useState } from "react";
 import SidebarItem from "../extra/SidebarItem";
 import UserAvatar from "../extra/UserAvatar";
+import { useDispatch } from "react-redux";
+import { closeMessgeDialog, closeSmallSidebar, openMessageDialog } from "@/redux/slices/miscSlice";
 
 interface sidebarItems {
   path?: string;
@@ -25,6 +27,7 @@ interface sidebarItems {
 const Sidebar = ({sidebar,toggleSidebar,setMessageDialogOpen,setSearchDialogOpen} : {sidebar : boolean,toggleSidebar : () => void;setSearchDialogOpen : any;
   setMessageDialogOpen  :any;}) => {
 
+    const dispatch = useDispatch();
 
 
   function handleSearchDialog() {
@@ -33,12 +36,13 @@ const Sidebar = ({sidebar,toggleSidebar,setMessageDialogOpen,setSearchDialogOpen
   }
   
   function handleMessageDialog() {
-      setMessageDialogOpen((prev : boolean) => !prev);
+    toggleSidebar();
+    dispatch(openMessageDialog());
   }
 
   
   return (
-    <div className={`max-h-screen ${ sidebar ? "w-[80px]" : "w-[260px]" }  top-0 bottom-0  fixed border-r-[2px] duration-500 transition-all border-gray-200`}>
+    <div className={`max-h-screen ${ sidebar ? "w-[80px]" : "w-[260px]" }  top-0 bottom-0 z-10  fixed border-r-[2px] duration-500 bg-white transition-all border-gray-200`}>
       <div className="w-full h-16 flex gap-2 items-center pl-5 border-b-[2px] bg-gray-50  border-gray-200">
         <InstagramIcon />
         {
@@ -55,11 +59,15 @@ const Sidebar = ({sidebar,toggleSidebar,setMessageDialogOpen,setSearchDialogOpen
       <div className="w-full pl-7 flex flex-col h-[500px] ">
 
        
-        <SidebarItem smallSidebar={sidebar} label="Home" path="/" icon={<Home/>}/>
+        <SidebarItem onClick={() => {
+          dispatch(closeSmallSidebar());
+          setSearchDialogOpen(false);
+          dispatch(closeMessgeDialog()) ;
+          }} smallSidebar={sidebar} label="Home" path="/" icon={<Home/>}/>
         <SidebarItem smallSidebar={sidebar} label="Search" onClick={handleSearchDialog}  icon={<Search/>}/>
         <SidebarItem smallSidebar={sidebar} label="Explore" path="/explore"  icon={<Compass/>}/>
         <SidebarItem smallSidebar={sidebar} label="Reels" path="/reels"  icon={<VideoIcon/>}/>
-        <SidebarItem smallSidebar={sidebar} label="Messages" onClick={handleMessageDialog}  icon={<MessageCircleReply/>}/>
+        <SidebarItem  smallSidebar={sidebar} label="Messages" onClick={handleMessageDialog}  icon={<MessageCircleReply/>}/>
         <SidebarItem smallSidebar={sidebar} label="Notifications" path="/notifications"  icon={<Heart/>}/>
         <UserAvatar/>
   
