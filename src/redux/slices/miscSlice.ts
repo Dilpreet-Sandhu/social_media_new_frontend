@@ -4,12 +4,18 @@ interface initial {
   smallSidebar: boolean;
   createChat: boolean;
   messageDialog : boolean;
+  notificationDialog : boolean;
+  searchDialog : boolean;
+  sidebarItem : "_" | "search" | "message" | "notification";
 }
 
 const initialState: initial = {
   smallSidebar: false,
   createChat: false,
   messageDialog : false,
+  notificationDialog : false,
+  searchDialog : false,
+  sidebarItem : "_",
 };
 
 const miscSlice = createSlice({
@@ -18,6 +24,9 @@ const miscSlice = createSlice({
   reducers: {
     setSmallSidebar: (state) => {
       state.smallSidebar = !state.smallSidebar;
+    },
+    openSmallSidebar : (state) => {
+      state.smallSidebar = true;
     },
     closeSmallSidebar: (state) => {
       state.smallSidebar = false;
@@ -28,11 +37,18 @@ const miscSlice = createSlice({
     closeCreateChatDialog: (state) => {
       state.createChat = false;
     },
-    openMessageDialog : (state) => {
-      state.messageDialog = true;
+    
+    setSidebarItemSearch : (state) => {
+      state.sidebarItem = "search";
     },
-    closeMessgeDialog : (state) => {
-      state.messageDialog = false;
+    setSidebarItemMessage : (state) => {
+      state.sidebarItem = "message";
+    },
+    setSidebarItemNotification : (state) => {
+      state.sidebarItem = "notification";
+    },
+    setSidebarItemHome : (state) => {
+      state.sidebarItem = "_";
     }
   },
 });
@@ -42,7 +58,10 @@ export const {
   closeSmallSidebar,
   openCreateChatDialog,
   closeCreateChatDialog,
-  openMessageDialog,
-  closeMessgeDialog,
+  openSmallSidebar,
+  setSidebarItemMessage,
+  setSidebarItemNotification,
+  setSidebarItemSearch,
+  setSidebarItemHome,
 } = miscSlice.actions;
 export default miscSlice;

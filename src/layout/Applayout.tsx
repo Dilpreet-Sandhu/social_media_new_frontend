@@ -5,8 +5,10 @@ import { useDispatch } from "react-redux";
 import { setSmallSidebar } from "../redux/slices/miscSlice";
 import { useLocation } from "react-router-dom";
 import ChatList from "@/components/Messages/ChatList";
-import CreateChatDialog from "@/components/Messages/CreateChatDialog";
+
+const NotificationDialog = lazy(() => import("@/components/Notification/NotificationDialog"));
 const SearchDialog = lazy(() => import("../components/home/SearchDialog"));
+const CreateChatDialog = lazy(() => import("@/components/Messages/CreateChatDialog"));
 
 const AppLayout = () => (Component: () => ReactNode) => {
   return (props: any) => {
@@ -14,7 +16,7 @@ const AppLayout = () => (Component: () => ReactNode) => {
     const [messageDialogOpen, setMessageDialogOpen] = useState(false);
 
     const location = useLocation();
-    const { smallSidebar,createChat ,messageDialog} = useAppSelector((state) => state.misc);
+    const { smallSidebar,createChat ,sidebarItem} = useAppSelector((state) => state.misc);
     const dispatch = useDispatch();
 
 
@@ -23,7 +25,7 @@ const AppLayout = () => (Component: () => ReactNode) => {
       dispatch(setSmallSidebar());
     }
 
-    console.log(messageDialog);
+ 
    
 
     return (
@@ -36,9 +38,10 @@ const AppLayout = () => (Component: () => ReactNode) => {
             toggleSidebar={toggleSidebar}
           />
         </div>
-        {searchDialogOpen && <SearchDialog />}
-        {messageDialog && <ChatList />}
+        {sidebarItem == "search" && <SearchDialog />}
+        {sidebarItem == "message" && <ChatList />}
         {createChat && <CreateChatDialog/>}
+        {sidebarItem == "notification" && <NotificationDialog/>}
         <Component />
       </div>
     );

@@ -1,5 +1,5 @@
 import UserProfileLoader from "@/loaders/userProfileLoaders";
-import { closeSmallSidebar } from "@/redux/slices/miscSlice";
+import {  closeSmallSidebar, setSidebarItemHome } from "@/redux/slices/miscSlice";
 import { useAppSelector } from "@/redux/store";
 import { Avatar, Skeleton } from "@mui/material";
 import axios from "axios";
@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDebounceCallback } from "usehooks-ts";
-
+import {motion} from 'framer-motion';
 
 
 const SearchDialog = () => {
@@ -58,7 +58,7 @@ const SearchDialog = () => {
 
 
   return (
-    <div className="w-[300px] h-full ml-[80px] z-10 rounded-md bg-white shadow-xl fixed ">
+    <motion.div initial={{width : "0"}} whileInView={{width : "300px"}}  className="w-[300px] h-full ml-[80px] z-10 rounded-md bg-white shadow-xl fixed ">
 
         <h1 className="text-black/90 font-semibold pt-5 pl-5 text-[24px]">Search</h1>
 
@@ -95,7 +95,7 @@ const SearchDialog = () => {
 
     </div>
       
-    </div>
+    </motion.div>
   )
 }
 
@@ -105,7 +105,11 @@ const SearchedUser = ({user,mutuals} : {user : any,mutuals : any}) => {
     const dispatch = useDispatch();
 
     return (
-        <Link onClick={() => dispatch(closeSmallSidebar())} to={`/${user?._id}`} className="w-full cursor-pointer pl-2 h-[50px] my-2 hover:bg-black/10 rounded-md gap-2 flex items-start">
+        <Link onClick={() => {
+
+            dispatch(closeSmallSidebar());
+            dispatch(setSidebarItemHome());
+            }} to={`/${user?._id}`} className="w-full cursor-pointer pl-2 h-[50px] my-2 hover:bg-black/10 rounded-md gap-2 flex items-start">
 
 
 

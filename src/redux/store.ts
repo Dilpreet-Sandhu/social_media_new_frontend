@@ -4,12 +4,14 @@ import miscSlice from "./slices/miscSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import api from "./slices/apiSlice";
+import chatSlice from "./slices/chatslice";
 
  const store = configureStore({
     reducer :{
         [userSlice.name] : userSlice.reducer,
         [api.reducerPath] : api.reducer, 
         [miscSlice.reducerPath] : miscSlice.reducer,
+        [chatSlice.name] : chatSlice.reducer,
     },
     middleware : (getDefaultMiddleware) => getDefaultMiddleware().concat(api.middleware),
 });

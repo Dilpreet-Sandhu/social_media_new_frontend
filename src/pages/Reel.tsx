@@ -4,7 +4,7 @@ import AppLayout from "@/layout/Applayout"
 
 const Reel = () => {
   return (
-    <div className="w-full flex items-center justify-center lg:mr-24 h-screen">
+    <div className="w-full ml-[46px] overflow-y-hidden flex items-center justify-center h-screen">
 
 
         <Reels/>

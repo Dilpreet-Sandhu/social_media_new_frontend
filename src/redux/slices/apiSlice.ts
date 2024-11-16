@@ -32,6 +32,7 @@ const api = createApi({
         method: "GET",
         credentials: "include",
       }),
+      keepUnusedDataFor : 60 * 5,
       providesTags : ["post"]
     }),
     getLikedPostIds: builder.query<any, void>({
@@ -93,9 +94,9 @@ const api = createApi({
         credentials : "include"
       })
     }),
-    getFeedReels : builder.query<any,void>({
-      query : () => ({
-        url : `/post/get/feed/reels`,
+    getFeedReels : builder.query<any,any>({
+      query : ({page}) => ({
+        url : `/post/get/feed/reels?page=${page}`,
         method : "GET",
         credentials : "include",
       })
@@ -123,7 +124,47 @@ const api = createApi({
         method : "GET",
         credentials : "include",
       })
+    }),
+
+    getMessages : builder.query<any,any>({
+      query : (chatId) => ({
+        url  :`/chat/get/message/${chatId}`,
+        method : "GET",
+        credentials : "include"
+      })
     })
+    ,
+    sendFollowRequest : builder.mutation<any,any>({
+      query : (userId) => ({
+        url : "/users/follow",
+        method : "PUT",
+        credentials : "include",
+        body : {userId}
+      })
+    }),
+    sendUnfollowRequest : builder.mutation<any,any>({
+      query : (userId) => ({
+        url : "/users/unfollow",
+        method : "PUT",
+        credentials : "include",
+        body : {userId},
+      })
+    }),
+    getUserNotifs : builder.query<any,void>({
+      query : () => ({
+        url : "/users/get/user/notifs",
+        method : 'GET',
+        credentials : "include"
+      })
+    }),
+    deleteNotification : builder.mutation<any,any>({
+      query : (notifId) => ({
+        url : "/users/del/notif",
+        method : "DELETE",
+        credentials : "include",
+        body : {notifId}
+      })
+    }),
     
 
   }),
@@ -145,7 +186,12 @@ export const {
   useGetFeedReelsQuery,
   useGetUserChatsQuery,
   useCreateChatMutation,
-  useGetChatDetailsQuery
+  useGetChatDetailsQuery,
+  useGetMessagesQuery,
+  useSendFollowRequestMutation,
+  useSendUnfollowRequestMutation,
+  useGetUserNotifsQuery,
+  useDeleteNotificationMutation
 } = api;
 
 export default api;

@@ -93,4 +93,15 @@ body {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+  .scroll-slow {
+    scroll-behavior:smooth;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scroll-snap-stop: always;
+  }
+  
+  .scroll-slow::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
 }

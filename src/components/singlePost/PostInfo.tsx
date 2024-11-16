@@ -1,3 +1,4 @@
+import { useGetLikedPostIdsQuery, useLikePostMutation } from "@/redux/slices/apiSlice";
 import { Avatar } from "@mui/material";
 import {
   Bookmark,
@@ -7,10 +8,36 @@ import {
   Share2Icon,
 } from "lucide-react";
 import moment from "moment";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const PostInfo = ({ post, comments }: { post: any; comments: any }) => {
   const [comment, setComment] = useState("");
+  const {data : likedposts} = useGetLikedPostIdsQuery();
+  const [like,setLike] = useState(false);
+  const [likePost] = useLikePostMutation();
+  
+  
+  const alreadyLiked = useMemo(() => likedposts?.data.includes(post?._id),[likedposts]);
+  useEffect(() => {
+    setLike(alreadyLiked);
+  },[alreadyLiked])
+
+
+  async function handleLike() {
+
+    setLike(prev => !prev);
+
+    try {
+      const data = await likePost({postId : post?._id});
+
+      console.log(data);
+      
+    } catch (error) {
+      console.log("error while liking post",error);
+      setLike(prev => !prev);
+    }
+
+  }
 
   return (
     <div className="w-1/2 h-full">
@@ -43,7 +70,7 @@ const PostInfo = ({ post, comments }: { post: any; comments: any }) => {
         {/* likes,comments save */}
         <div className="flex py-2 items-center justify-between px-4">
           <div className="flex gap-3 items-center">
-            <Heart className="cursor-pointer hover:text-gray-500" />
+            <Heart style={{fill : like ? "red" : "transparent",borderColor : like ? "red" : "transparent"}} onClick={handleLike} className="cursor-pointer hover:text-gray-500" />
             <MessageCircle className="cursor-pointer hover:text-gray-500" />
             <Share2Icon className="cursor-pointer hover:text-gray-500" />
           </div>
