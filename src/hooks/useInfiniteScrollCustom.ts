@@ -23,7 +23,7 @@ export function useInfiniteScrollCustom({
         if (node && hasMore) {
             observerRef.current = new IntersectionObserver(([entry]) => {
                 if (entry.isIntersecting) {
-                    fetchMore()
+                    fetchMore();
                 }
             },{threshold});
 
