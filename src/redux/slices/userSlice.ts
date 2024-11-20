@@ -29,8 +29,8 @@ const userSlice = createSlice({
         setUser : (state,action) => {
             state.user = action.payload;
         },
-        removeUser : (state,action) => {
-            state.user = action.payload;
+        removeUser : (state) => {
+            state.user = null;
         },
         addUserToFollowers : (state,action : {payload : string}) => {
             state.user?.followers.push(action.payload);

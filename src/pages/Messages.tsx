@@ -16,7 +16,7 @@ const Messages = () => {
 
 
   return (
-    <div className="w-full relative ml-[120px] h-screen  flex flex-col">
+    <div className="w-full  relative ml-[120px] min-h-screen  flex flex-col">
 
       {
           data?.data?.groupChat ? <GroupUserInfo chat={data?.data}/> :  <UserInfo users={data?.data?.members} />
@@ -28,7 +28,7 @@ const Messages = () => {
 
      <SendMessage chatId={chatId} members={data?.data?.members}/>
 
-
+      
       
     </div>
   )
@@ -57,7 +57,6 @@ const UserInfo = ({users} : {users : any[]}) => {
 
 const GroupUserInfo = ({chat} : {chat : any}) => {
 
-  console.log(chat);
 
   return (
     <div className="w-full h-[60px] z-20 border-b-[2px] border-black/20">

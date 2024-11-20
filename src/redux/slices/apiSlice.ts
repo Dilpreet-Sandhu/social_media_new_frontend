@@ -165,7 +165,30 @@ const api = createApi({
         body : {notifId}
       })
     }),
-    
+    sendFile : builder.mutation<any,any>({
+      query : (data) => ({
+        url : "/chat/new/attach",
+        method : "POST",
+        credentials : "include",
+        body : data,
+      })
+    }),
+    logout : builder.mutation<any,void>({
+      query : () => ({
+        url : "/users/logout",
+        method : 'PUT',
+        credentials : "include",
+
+      })
+    }),
+    createPost : builder.mutation<any,any>({
+      query : (data) => ({
+        url : "/post/create",
+        method : 'POST',
+        body : data,
+        credentials : "include"
+      })
+    })
 
   }),
 });
@@ -191,7 +214,10 @@ export const {
   useSendFollowRequestMutation,
   useSendUnfollowRequestMutation,
   useGetUserNotifsQuery,
-  useDeleteNotificationMutation
+  useDeleteNotificationMutation,
+  useSendFileMutation,
+  useLogoutMutation,
+  useCreatePostMutation
 } = api;
 
 export default api;

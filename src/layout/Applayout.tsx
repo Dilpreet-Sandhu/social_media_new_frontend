@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { setSmallSidebar } from "../redux/slices/miscSlice";
 import { useLocation } from "react-router-dom";
 import ChatList from "@/components/Messages/ChatList";
+import CreatePost from "@/components/createPost/CreatePost";
 
 const NotificationDialog = lazy(() => import("@/components/Notification/NotificationDialog"));
 const SearchDialog = lazy(() => import("../components/home/SearchDialog"));
@@ -16,7 +17,7 @@ const AppLayout = () => (Component: () => ReactNode) => {
     const [messageDialogOpen, setMessageDialogOpen] = useState(false);
 
     const location = useLocation();
-    const { smallSidebar,createChat ,sidebarItem} = useAppSelector((state) => state.misc);
+    const { smallSidebar,createChat ,sidebarItem,createPost} = useAppSelector((state) => state.misc);
     const dispatch = useDispatch();
 
 
@@ -38,10 +39,11 @@ const AppLayout = () => (Component: () => ReactNode) => {
             toggleSidebar={toggleSidebar}
           />
         </div>
-        {sidebarItem == "search" && <SearchDialog />}
-        {sidebarItem == "message" && <ChatList />}
-        {createChat && <CreateChatDialog/>}
-        {sidebarItem == "notification" && <NotificationDialog/>}
+        {sidebarItem == "search" ? <SearchDialog /> : null}
+        {sidebarItem == "message" ? <ChatList /> : null}
+        {createChat ? <CreateChatDialog/> : null}
+        {sidebarItem == "notification" ? <NotificationDialog/> : null}
+        {createPost && <CreatePost/> }
         <Component />
       </div>
     );

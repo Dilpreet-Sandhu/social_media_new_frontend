@@ -1,20 +1,22 @@
 import { useLocation } from "react-router-dom";
 import FeedPosts from "../components/posts/Posts";
 import AppLayout from "../layout/Applayout";
+import { useAppSelector } from "@/redux/store";
+import Story from "@/components/story/Story";
 
 const Home = () => {
 
   const location = useLocation();
-  
+  const {smallSidebar} = useAppSelector(state => state.misc);
 
   return (
-    <div className="w-full px-20 flex min-h-screen">
+    <div className={`w-full ${smallSidebar && "ml-[256px]"} px-20 flex min-h-screen`}>
 
     <div className="w-[790px] h-full flex flex-col">
 
-      <div className="w-full h-[100px] ">
+      <div className="w-full  h-[100px] ">
 
-        {/* stories */}
+        <Story/>
 
       </div>
       <div className="flex-1 py-10">

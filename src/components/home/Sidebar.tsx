@@ -1,25 +1,29 @@
 import {
   closeSmallSidebar,
+  setCreatePost,
   setSidebarItemHome,
   setSidebarItemMessage,
   setSidebarItemNotification,
-  setSidebarItemSearch,
-  setSmallSidebar
+  setSidebarItemSearch
 } from "@/redux/slices/miscSlice";
+import { useAppSelector } from "@/redux/store";
 import {
   Compass,
   Heart,
   Home,
   InstagramIcon,
+  LogOut,
   MessageCircleReply,
+  PlusCircle,
   Search,
-  Settings,
-  VideoIcon,
+  VideoIcon
 } from "lucide-react";
 import { useDispatch } from "react-redux";
 import SidebarItem from "../extra/SidebarItem";
 import UserAvatar from "../extra/UserAvatar";
-import { useAppSelector } from "@/redux/store";
+import { useLogoutMutation } from "@/redux/slices/apiSlice";
+import { useNavigate } from "react-router-dom";
+import { removeUser } from "@/redux/slices/userSlice";
 
 
 interface sidebarItems {
@@ -44,11 +48,19 @@ const Sidebar = ({
   setMessageDialogOpen: any;
 }) => {
   const dispatch = useDispatch();
-  const {smallSidebar} = useAppSelector(state => state.misc);
+  const {smallSidebar,sidebarItem} = useAppSelector(state => state.misc);
+  const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
 
   function handleSearchDialog() {
+
+    
+    if (sidebarItem == "search") {
+      dispatch(setSidebarItemHome());
+    }
+    
     if (smallSidebar) {
-    dispatch(setSidebarItemSearch());
+      dispatch(setSidebarItemSearch());
       return;
     }
     toggleSidebar();
@@ -76,6 +88,22 @@ const Sidebar = ({
   function handleExploreClick() {
     dispatch(closeSmallSidebar());
     dispatch(setSidebarItemHome())
+  }
+
+  async function handleLogOut() {
+    try {
+
+      await logout();
+      dispatch(removeUser())
+      navigate('/login')
+      
+    } catch (error) {
+      console.log("error while logging out",error);
+    }
+  }
+
+  function handleCreatePost() {
+    dispatch(setCreatePost());
   }
 
   return (
@@ -136,6 +164,12 @@ const Sidebar = ({
         />
         <SidebarItem
           smallSidebar={sidebar}
+          label="Create"
+          onClick={handleCreatePost}
+          icon={<PlusCircle />}
+        />
+        <SidebarItem
+          smallSidebar={sidebar}
           label="Notifications"
           onClick={openNotificaitonDialog}
           icon={<Heart />}
@@ -145,16 +179,16 @@ const Sidebar = ({
       <div className="w-full pt-5 mb-2 h-[122px] ">
         {!sidebar && (
           <p className="text-[10px] mb-2 font-medium pt-5 text-black/40 pl-10">
-            SETTING
+            MORE
           </p>
         )}
 
         <div className="pl-7">
           <SidebarItem
             smallSidebar={sidebar}
-            label="Settings"
-            path="/settings"
-            icon={<Settings />}
+            onClick={handleLogOut}
+            label="Logout"
+            icon={<LogOut />}
           />
         </div>
       </div>

@@ -9,6 +9,7 @@ interface initial {
   isReelCommentsOpen : boolean;
   sidebarItem : "_" | "search" | "message" | "notification";
   reelId : string;
+  createPost : boolean;
 }
 
 const initialState: initial = {
@@ -20,6 +21,7 @@ const initialState: initial = {
   sidebarItem : "_",
   isReelCommentsOpen : false,
   reelId : "",
+  createPost : false,
 };
 
 const miscSlice = createSlice({
@@ -59,6 +61,9 @@ const miscSlice = createSlice({
     },
     setReelId : (state,action) => {
       state.reelId = action.payload;
+    },
+    setCreatePost : (state) => {
+      state.createPost = !state.createPost;
     }
   },
 });
@@ -74,6 +79,7 @@ export const {
   setSidebarItemSearch,
   setSidebarItemHome,
   setReelCommentSectionOpen,
-  setReelId
+  setReelId,
+  setCreatePost
 } = miscSlice.actions;
 export default miscSlice;

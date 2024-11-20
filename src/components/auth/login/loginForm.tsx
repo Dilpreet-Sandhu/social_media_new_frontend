@@ -5,11 +5,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/slices/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -33,11 +35,12 @@ const LoginForm = () => {
     try {
 
       const res = await axios.post("http://localhost:4000/api/users/sign-in",data,{withCredentials : true});
-
-      if (res.data.data.success) {
-        console.log(res?.data?.data?.data);
+        console.log(res.data?.success);
+      if (res.data?.success) {
+        console.log(res?.data?.data);
         toast("you are logged in succesfully",{type : "success"});
-        dispatch(setUser(res?.data?.data?.data));
+        dispatch(setUser(res?.data?.data));
+        navigate("/");
       }
       
     } catch (error) {

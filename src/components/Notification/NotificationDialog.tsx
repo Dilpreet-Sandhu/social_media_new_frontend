@@ -7,7 +7,28 @@ import {motion} from 'framer-motion';
 
 const NotificationDialog = () => {
 
-  const {data,isLoading,isError} = useGetUserNotifsQuery();
+  const {data,isFetching,isError} = useGetUserNotifsQuery();
+
+  const [notifications,setNotifications] = useState<any[]>([]);
+
+  useEffect(() => {
+
+    if (!isError || !isFetching) {
+      setNotifications(data?.data)
+    }
+
+  },[isFetching]);
+
+
+  function deleteNotif(id : string) {
+
+    let copy = [...notifications];
+
+    copy = copy.filter((item) => item?._id.toString() !== id.toString());
+
+    setNotifications(copy);
+
+  } 
 
 
 
@@ -21,7 +42,7 @@ const NotificationDialog = () => {
         <h1 className="text-[24px] font-bold text-black/60">Notifications</h1>
       </div>
 
-    <Notifications notifications={data?.data}/>
+    <Notifications handleDeleteNotif={deleteNotif} notifications={notifications}/>
 
       
     </motion.div>
@@ -29,7 +50,7 @@ const NotificationDialog = () => {
 }
 
 
-const Notifications = ({notifications} : {notifications : any[]})  => {
+const Notifications = ({notifications,handleDeleteNotif} : {notifications : any[],handleDeleteNotif : (id : string) => void})  => {
 
 
   return (
@@ -38,9 +59,9 @@ const Notifications = ({notifications} : {notifications : any[]})  => {
           notifications?.map((notif,idx) => {
 
             if (notif?.type == "follow") {
-              return <FollowNotif key={idx} notif={notif}/>
+              return <FollowNotif handleDeleteNotification={handleDeleteNotif} key={idx} notif={notif}/>
             }else if (notif?.type == "like") {
-              return <LikeNotif key={idx} notif={notif}/>
+              return <LikeNotif handleDeleteNotification={handleDeleteNotif} key={idx} notif={notif}/>
             }
 })
         }
@@ -49,7 +70,7 @@ const Notifications = ({notifications} : {notifications : any[]})  => {
 
 }
 
-const FollowNotif = ({notif} : {notif : any }) => {
+const FollowNotif = ({notif,handleDeleteNotification} : {notif : any,handleDeleteNotification : (id :string) => void }) => {
 
   const {user} = useAppSelector(state => state.user);
 
@@ -79,7 +100,7 @@ const FollowNotif = ({notif} : {notif : any }) => {
 
     try {
 
-
+      handleDeleteNotification(notif?._id);
       await deleteNotif(notif?._id);
 
     
@@ -110,7 +131,7 @@ const FollowNotif = ({notif} : {notif : any }) => {
 }
 
 
-const LikeNotif = ({notif} : {notif : any}) => {
+const LikeNotif = ({notif,handleDeleteNotification} : {notif : any,handleDeleteNotification : (id : string) => void}) => {
 
 
   const [deleteNotif] = useDeleteNotificationMutation();
@@ -119,7 +140,7 @@ const LikeNotif = ({notif} : {notif : any}) => {
 
     try {
 
-
+      handleDeleteNotification(notif?._id);
       const data = await deleteNotif(notif?._id);
 
       console.log(data);
