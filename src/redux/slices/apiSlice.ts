@@ -188,6 +188,14 @@ const api = createApi({
         body : data,
         credentials : "include"
       })
+    }),
+    uploadStory : builder.mutation<any,any>({
+      query : (data) => ({
+          url : "/story/new",
+          method : 'POST',
+          body : data,
+          credentials :"include"
+      })
     })
 
   }),
@@ -217,7 +225,8 @@ export const {
   useDeleteNotificationMutation,
   useSendFileMutation,
   useLogoutMutation,
-  useCreatePostMutation
+  useCreatePostMutation,
+  useUploadStoryMutation
 } = api;
 
 export default api;

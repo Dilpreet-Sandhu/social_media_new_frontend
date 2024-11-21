@@ -1,6 +1,8 @@
+import { setCreateStory } from "@/redux/slices/miscSlice"
 import { useAppSelector } from "@/redux/store"
 import { Avatar } from "@mui/material"
 import { PlusCircle } from "lucide-react"
+import { useDispatch } from "react-redux"
 
 
 const Story = () => {
@@ -9,9 +11,6 @@ const Story = () => {
         <div className="flex flex-col items-center justify-center">
         <CreateMyStory/>
         </div>
-       
-       
-       
     </div>
   )
 }
@@ -20,12 +19,13 @@ const Story = () => {
 const CreateMyStory = () => {
 
     const {user} = useAppSelector(state => state.user);
+    const dispatch = useDispatch();
 
     return (
         <>
-        <div className="w-[53px] border-[2px] relative flex flex-col items-center justify-center bg-gradient-to-r from-red-500 to-pink-600 h-[53px] cursor-pointer rounded-full">
+        <div onClick={() => dispatch(setCreateStory())} className="w-[53px] border-[2px] relative flex flex-col items-center justify-center bg-gradient-to-r from-red-500 to-pink-600 h-[53px] cursor-pointer rounded-full">
             <Avatar sx={{width : '45px',height : "45px"}} src={user?.avatar}/>
-            <span className="absolute bottom-[2px] right-[2px]  z-20">
+            <span className="absolute bottom-[2px] right-[2px]  z-10">
             <PlusCircle fill="white" />
             </span>
         </div>
