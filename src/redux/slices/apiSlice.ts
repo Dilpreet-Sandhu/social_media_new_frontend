@@ -196,6 +196,13 @@ const api = createApi({
           body : data,
           credentials :"include"
       })
+    }),
+    getMyStories : builder.query<any,void>({
+      query : () => ({
+        url : `/story/get/my`,
+        method : 'GET',
+        credentials : "include"
+      })
     })
 
   }),
@@ -226,7 +233,8 @@ export const {
   useSendFileMutation,
   useLogoutMutation,
   useCreatePostMutation,
-  useUploadStoryMutation
+  useUploadStoryMutation,
+  useGetMyStoriesQuery
 } = api;
 
 export default api;

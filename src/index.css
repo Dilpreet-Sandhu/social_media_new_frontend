@@ -104,4 +104,20 @@ body {
     height: 8px;
     width: 8px;
   }
+
+  .animate {
+    animation: widthAnimation linear forwards;
+  }
+
+  
+}
+
+
+@keyframes widthAnimation {
+  from {
+    width : 0%;
+  }
+  to {
+    width : 100%;
+  }
 }

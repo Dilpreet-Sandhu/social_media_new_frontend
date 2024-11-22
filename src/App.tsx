@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { setUser } from "./redux/slices/userSlice";
 import Loading from "./loaders/Loading";
+import Stories from "./pages/Stories";
 
 const Auth = lazy(() => import("./pages/Auth"));
 const Home = lazy(() => import("./pages/Home"));
@@ -43,6 +44,7 @@ function App() {
           <Route path={"/explore"} element={<ExplorePage/>}/>
           <Route path="/reels" element={<Reels/>}/>
           <Route path="/messages/c/:chatId" element={<Messages/>}/>
+          <Route path="/stories" element={<Stories/>}/>
         </Route>
         <Route
           path="/login"
