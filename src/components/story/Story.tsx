@@ -62,7 +62,7 @@ const Story = () => {
         <CreateMyStory/>
         </div>
         {
-            data?.data.map((user : any) => (
+            data?.data?.map((user : any) => (
               <div className="flex flex-col items-center justify-center">
                 <UserStory key={user?._id} user={user}/>
               </div>
