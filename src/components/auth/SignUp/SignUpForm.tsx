@@ -47,7 +47,7 @@ const SignUpForm = ({
 
     try {
 
-        const res = await axios.postForm("http://localhost:4000/api/users/sign-up",data,{withCredentials : true});
+        const res = await axios.postForm("https://social-media-backend-c9b2.onrender.com/api/users/sign-up",data,{withCredentials : true});
 
         if (res.data) {
             toast("user registed succesfully",{type : "success"});
