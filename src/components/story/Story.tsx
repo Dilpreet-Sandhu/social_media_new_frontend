@@ -23,7 +23,7 @@ const Story = () => {
 
     if (!isFetching) {
 
-      mutatedUsers = [...data?.data];
+      mutatedUsers = data?.data ? [...data?.data] : [];
     }
     mutatedUsers.unshift({
       _id : user?._id,
