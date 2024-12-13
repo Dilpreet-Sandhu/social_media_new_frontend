@@ -1,16 +1,14 @@
 
-import { useInfiniteScrollCustom } from "@/hooks/useInfiniteScrollCustom";
 import { useGetFeedReelsQuery, useGetLikedPostIdsQuery, useLikePostMutation } from "@/redux/slices/apiSlice";
-import axios from "axios";
-import { useInView } from "react-intersection-observer";
-import { useEffect, useRef, useState, forwardRef, useCallback, useMemo } from "react";
-import ReelButton from "./ReelButton";
-import { Heart, MessageCircle, Share } from "lucide-react";
-import { Avatar } from "@mui/material";
-import { useAppSelector } from "@/redux/store";
-import ReelCommentsDialog from "./ReelComments";
-import { useDispatch } from "react-redux";
 import { setReelCommentSectionOpen, setReelId } from "@/redux/slices/miscSlice";
+import { useAppSelector } from "@/redux/store";
+import { Avatar } from "@mui/material";
+import { Heart, MessageCircle, Share } from "lucide-react";
+import { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { useDispatch } from "react-redux";
+import ReelButton from "./ReelButton";
+import ReelCommentsDialog from "./ReelComments";
 
 const Reels = () => {
   const [page, setPage] = useState(1);
@@ -88,7 +86,7 @@ const Reels = () => {
   );
 };
 
-const ReelComponent = forwardRef<any, any>(({ reel, idx, length }, ref) => {
+const ReelComponent = forwardRef<any, any>(({ reel }, ref) => {
 
    
   const dispatch = useDispatch();
@@ -140,8 +138,7 @@ const ReelButtons = ({reelId} : {reelId : string}) => {
     try {
 
       setLike(prev => !prev);
-     const data = await likePost({postId : reelId});
-     console.log(data)
+     await likePost({postId : reelId});
       
     } catch (error) {
       console.log("error while liking post",error);

@@ -1,9 +1,8 @@
-import { lazy, ReactNode, useState } from "react";
+import { lazy, ReactNode } from "react";
 import Sidebar from "../components/home/Sidebar";
 import { useAppSelector } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { setSmallSidebar } from "../redux/slices/miscSlice";
-import { useLocation } from "react-router-dom";
 import ChatList from "@/components/Messages/ChatList";
 import CreatePost from "@/components/createPost/CreatePost";
 import CreateStoryDialog from "@/components/createStory/CreateStoryDialog";
@@ -14,10 +13,9 @@ const CreateChatDialog = lazy(() => import("@/components/Messages/CreateChatDial
 
 const AppLayout = () => (Component: () => ReactNode) => {
   return (props: any) => {
-    const [searchDialogOpen, setSearchDialogOpen] = useState(false);
-    const [messageDialogOpen, setMessageDialogOpen] = useState(false);
+  
+    console.log(props);
 
-    const location = useLocation();
     const { smallSidebar,createChat ,sidebarItem,createPost,createStory} = useAppSelector((state) => state.misc);
     const dispatch = useDispatch();
 
@@ -34,8 +32,6 @@ const AppLayout = () => (Component: () => ReactNode) => {
       <div className="w-full flex ">
         <div className={`${smallSidebar ? "w-[80px]" : "w-[256px]"}`}>
           <Sidebar
-            setMessageDialogOpen={setMessageDialogOpen}
-            setSearchDialogOpen={setSearchDialogOpen}
             sidebar={smallSidebar}
             toggleSidebar={toggleSidebar}
           />

@@ -1,11 +1,11 @@
 import { NEW_MESSAGE } from "@/constants/constants";
+import { useSendFileMutation } from "@/redux/slices/apiSlice";
 import { useAppSelector } from "@/redux/store";
 import { getSocket } from "@/socket/Socket";
-import {  File, Image, Paperclip, Video } from "lucide-react";
-import { ChangeEvent, FormEvent, forwardRef, useRef, useState } from "react";
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
+import { Image, Paperclip, Video } from "lucide-react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
-import { useSendFileMutation } from "@/redux/slices/apiSlice";
 
 const SendMessage = ({chatId,members} : {chatId ?: string,members : any[]}) => {
   const socket : any = getSocket();
@@ -63,7 +63,7 @@ const SendMessage = ({chatId,members} : {chatId ?: string,members : any[]}) => {
 const SelectFileDialog = ({chatId,handleFileDialog} : {chatId : any,handleFileDialog : () => void}) => {
 
   const [sendFile] = useSendFileMutation();
-  const [loading,setLoading] = useState(false);
+
 
   const handleOnChange = async (e : ChangeEvent<HTMLInputElement> ,key : string) => {
 
@@ -76,8 +76,7 @@ const SelectFileDialog = ({chatId,handleFileDialog} : {chatId : any,handleFileDi
     const toastId = toast.loading(`sending ${key}`,{type : "default",isLoading : true});
     try {
 
-      setLoading(true);
-      
+   
 
       const formData = new FormData();
       formData.append("chatId",chatId);
@@ -85,7 +84,7 @@ const SelectFileDialog = ({chatId,handleFileDialog} : {chatId : any,handleFileDi
       formData.append("file",file);
      })
 
-      const data = await sendFile(formData);
+       await sendFile(formData);
 
      toast.update(toastId,{
       render : `${key} sent sucesfully`,
@@ -98,7 +97,6 @@ const SelectFileDialog = ({chatId,handleFileDialog} : {chatId : any,handleFileDi
       
     } catch (error) {
       console.log("error while sending file",error);
-      setLoading(false);
       toast.update(toastId, {
         render: "Something went wrong!",
         type: "error",
@@ -106,7 +104,7 @@ const SelectFileDialog = ({chatId,handleFileDialog} : {chatId : any,handleFileDi
         autoClose: 3000, // Close after 3 seconds
       });
     }finally {
-      setLoading(false);
+
     }
 
 

@@ -4,13 +4,12 @@ import { useAppSelector } from "@/redux/store";
 import { getSocket } from "@/socket/Socket";
 import { Avatar } from "@mui/material";
 import moment from "moment";
-import { Ref, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import AttachmentView from "./AttachmentView";
 
 const MessgeList = ({ chatId }: { chatId?: string }) => {
   const {
     data: oldMessages,
-    isLoading,
     isFetching,
     refetch,
   } = useGetMessagesQuery(chatId);

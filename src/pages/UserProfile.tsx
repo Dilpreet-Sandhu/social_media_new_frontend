@@ -1,15 +1,14 @@
 
 
-import { useParams } from 'react-router-dom';
-import AppLayout from '../layout/Applayout'
-import { useGetUserById } from '../hooks/getuserbyid';
-import Profile from '../components/userProfile/Profile';
-import Loading from '../loaders/Loading';
-import { useState } from 'react';
-import { BatteryWarning, Bookmark, Grid } from 'lucide-react';
-import Posts from '../components/userProfile/Posts';
-import { Skeleton } from '@mui/material';
 import { useAppSelector } from '@/redux/store';
+import { Skeleton } from '@mui/material';
+import { BatteryWarning, Bookmark, Grid } from 'lucide-react';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import Posts from '../components/userProfile/Posts';
+import Profile from '../components/userProfile/Profile';
+import { useGetUserById } from '../hooks/getuserbyid';
+import AppLayout from '../layout/Applayout';
 
 const UserProfile = () => {
 

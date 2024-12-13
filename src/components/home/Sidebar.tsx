@@ -26,26 +26,17 @@ import { useNavigate } from "react-router-dom";
 import { removeUser } from "@/redux/slices/userSlice";
 
 
-interface sidebarItems {
-  path?: string;
-  text: string;
-  icon: any;
-  changeHandler?: any;
-  searchDialogOpen: boolean;
-  setSearchDialogOpen: any;
-  setMessageDialogOpen: any;
-}
+
 
 const Sidebar = ({
   sidebar,
   toggleSidebar,
-  setMessageDialogOpen,
-  setSearchDialogOpen,
+
 }: {
   sidebar: boolean;
   toggleSidebar: () => void;
-  setSearchDialogOpen: any;
-  setMessageDialogOpen: any;
+  setSearchDialogOpen?: any;
+  setMessageDialogOpen?: any;
 }) => {
   const dispatch = useDispatch();
   const {smallSidebar,sidebarItem} = useAppSelector(state => state.misc);

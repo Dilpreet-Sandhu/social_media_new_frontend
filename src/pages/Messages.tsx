@@ -11,7 +11,7 @@ const Messages = () => {
 
     const chatId = searchParams?.chatId;
 
-    const {data,isLoading,isError} = useGetChatDetailsQuery(chatId,{skip : !chatId});
+    const {data} = useGetChatDetailsQuery(chatId,{skip : !chatId});
 
 
 

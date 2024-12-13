@@ -8,7 +8,7 @@ import {
   Share2Icon,
 } from "lucide-react";
 import { MouseEvent, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../auth/Input";
 import Button from "../Button";
 

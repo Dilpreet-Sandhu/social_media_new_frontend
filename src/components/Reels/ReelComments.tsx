@@ -1,19 +1,19 @@
 import { useGetCommentsOnPostQuery } from "@/redux/slices/apiSlice";
-import { useAppSelector } from "@/redux/store"
+import { setReelCommentSectionOpen } from "@/redux/slices/miscSlice";
+import { useAppSelector } from "@/redux/store";
+import { Avatar } from "@mui/material";
+import { motion } from 'framer-motion';
 import { X } from "lucide-react";
 import { useEffect } from "react";
-import CreateCommentButton from "./CreateCommentButton";
-import { Avatar } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { setReelCommentSectionOpen } from "@/redux/slices/miscSlice";
-import {motion} from 'framer-motion';
+import CreateCommentButton from "./CreateCommentButton";
 
 
 const ReelCommentsDialog = () => {
 
   const {reelId} = useAppSelector(state => state.misc);
 
-  const {data,isLoading,error,refetch} = useGetCommentsOnPostQuery({postId : reelId});
+  const {data,isLoading,refetch} = useGetCommentsOnPostQuery({postId : reelId});
   const dispatch = useDispatch();
 
   console.log(data?.data);

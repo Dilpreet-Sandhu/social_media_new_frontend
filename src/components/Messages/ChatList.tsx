@@ -7,9 +7,9 @@ import { useAppSelector } from "@/redux/store";
 import { getSocket } from "@/socket/Socket";
 import { Avatar, AvatarGroup, Tooltip } from "@mui/material";
 import { ArrowDown, FilePen } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ChatList = () => {
   const { user } = useAppSelector((state) => state.user);
@@ -36,8 +36,8 @@ const ChatList = () => {
 };
 
 const Chats = () => {
-  const { data, isLoading } = useGetUserChatsQuery();
-  const [chatList, setChatList] = useState<any[]>([]);
+  const { data } = useGetUserChatsQuery();
+ 
 
   const params = useParams();
   const dispatch = useDispatch();
@@ -88,7 +88,7 @@ const Chat = ({ chat }: { chat: any }) => {
   const {newMessageAlert} = useAppSelector(state => state.chat);
   const dispatch = useDispatch();
 
-  const newMessage : any = newMessageAlert.find(({chatId}) => chatId == chat?._id);
+  const newMessage : any = newMessageAlert.find((item : any) => item?.chatId == chat?._id);
 
   return (
     <div

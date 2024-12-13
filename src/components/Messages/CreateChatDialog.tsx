@@ -14,7 +14,7 @@ const CreateChatDialog = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const {searchValue,setSearchValue,debouncedValue,users,loading,error} = useDebouncedValue();
+    const {searchValue,setSearchValue,debouncedValue,users} = useDebouncedValue();
     const [createNewChat] = useCreateChatMutation();
     const [userToChatWith,setUserToChatWith] = useState<any[]>([]);
 

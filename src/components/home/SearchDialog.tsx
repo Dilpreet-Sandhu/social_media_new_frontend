@@ -1,14 +1,13 @@
 import UserProfileLoader from "@/loaders/userProfileLoaders";
-import {  closeSmallSidebar, setSidebarItemHome } from "@/redux/slices/miscSlice";
-import { useAppSelector } from "@/redux/store";
-import { Avatar, Skeleton } from "@mui/material";
+import { closeSmallSidebar, setSidebarItemHome } from "@/redux/slices/miscSlice";
+import { Avatar } from "@mui/material";
 import axios from "axios";
-import { CircleX } from "lucide-react"
-import { useEffect, useState } from "react"
+import { motion } from 'framer-motion';
+import { CircleX } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { useDebounceCallback } from "usehooks-ts";
-import {motion} from 'framer-motion';
 
 
 const SearchDialog = () => {
@@ -16,11 +15,8 @@ const SearchDialog = () => {
     const [searchValue,setSearchValue] = useState("");
     const [debouncedSearchValue,setDebouncedSearchValue] = useState("");
     const [loading,setLoading] = useState(false);
-    const [error,setError] = useState(null);
     const [users,setUsers] = useState([]);
 
-
-    const {user} = useAppSelector(state => state.user);
 
 
     const debouncedValue = useDebounceCallback(setDebouncedSearchValue,500);
@@ -43,7 +39,6 @@ const SearchDialog = () => {
                     
                 } catch (error : any) {
                     console.log('error while searching user: ',error);
-                    setError(error);
                     setLoading(false);
                 }
             }
@@ -79,17 +74,17 @@ const SearchDialog = () => {
         {
             users.map((otherUser : any,idx) => {
 
-                const mutuals = otherUser.followers.map((follower : any) => {
+                // const mutuals = otherUser.followers.map((follower : any) => {
 
-                    if (user?.following.includes(follower?._id)) {
-                        return otherUser?.follower?.username;
-                    }
+                //     if (user?.following.includes(follower?._id)) {
+                //         return otherUser?.follower?.username;
+                //     }
 
-                })
+                // })
 
 
 
-                return loading ? <UserProfileLoader key={idx}/> : <SearchedUser mutuals={mutuals} key={idx} user={otherUser}/>
+                return loading ? <UserProfileLoader key={idx}/> : <SearchedUser  key={idx} user={otherUser}/>
 })
         }
 
@@ -100,9 +95,10 @@ const SearchDialog = () => {
 }
 
 
-const SearchedUser = ({user,mutuals} : {user : any,mutuals : any}) => {
+const SearchedUser = ({user} : {user : any,mutuals? : any}) => {
 
     const dispatch = useDispatch();
+
 
     return (
         <Link onClick={() => {

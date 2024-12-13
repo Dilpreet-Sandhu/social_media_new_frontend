@@ -1,6 +1,6 @@
 import useGetFileType from "@/hooks/useGetFileType";
 import { Avatar } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {File} from 'lucide-react';
 
 const AttachmentView = ({ attachments }: { attachments: any }) => {

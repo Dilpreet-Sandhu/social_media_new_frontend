@@ -1,12 +1,11 @@
 import AppLayout from "@/layout/Applayout";
-import { useGetExploreFeedQuery } from "@/redux/slices/apiSlice"
+import { useGetExploreFeedQuery } from "@/redux/slices/apiSlice";
 import { Heart, MessageCircle } from "lucide-react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const ExplorePage = () => {
 
-    const {data,isError,isLoading} = useGetExploreFeedQuery();
+    const {data} = useGetExploreFeedQuery();
 
   return (
     <div className="w-full px-24 flex items-center justify-center  py-5 h-screen">

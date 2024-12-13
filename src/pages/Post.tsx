@@ -11,7 +11,7 @@ const FullViewPost = () => {
    const postId = params.postId;
    const navigate = useNavigate();
   
-    const {data,isFetching,isLoading,isError} = useGetSinglePostQuery({postId : postId || ""});
+    const {data,isFetching} = useGetSinglePostQuery({postId : postId || ""});
 
     const [comments,setComments] = useState<any[]>([]);
 

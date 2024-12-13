@@ -13,7 +13,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const PostInfo = ({ post, comments,handleAddComment }: { post: any; comments: any,handleAddComment : (comment : any) => void }) => {
   const [comment, setComment] = useState("");
-  const {data : likedposts,isFetching,isLoading} = useGetLikedPostIdsQuery();
+  const {data : likedposts,isFetching} = useGetLikedPostIdsQuery();
   const [createComment] = useAddCommentMutation();
   const [like,setLike] = useState(false);
   const [likesCount,setLikesCount] = useState(0);

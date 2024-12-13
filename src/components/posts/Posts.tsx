@@ -94,7 +94,7 @@ const UserPost = ({ post,location }: { post: any,location : any }) => {
     setIsLiked(prev => !prev);
 
     try {
-      const data = await likePost({postId : post?._id});
+      await likePost({postId : post?._id});
 
     
       
@@ -131,10 +131,8 @@ const UserPost = ({ post,location }: { post: any,location : any }) => {
 
     try {
 
-      const data = await addCommentToPostApi({postId : post?._id,comment,type : "post"});
+       await addCommentToPostApi({postId : post?._id,comment,type : "post"});
 
-
-      console.log(data);
       
     } catch (error) {
       console.log("error while adding comment: ",error);
