@@ -19,7 +19,7 @@ const FeedPosts = ({location} : {location : any}) => {
   return (
     <div className="w-full h-full flex items-center gap-4 flex-col">
       {
-        userFeed?.data.length > 0 ? userFeed?.data.map((post : any,idx : number) => <UserPost location={location} key={idx} post={post} />) : <div>no posts</div>
+        userFeed?.data.length > 0 ? userFeed?.data?.map((post : any,idx : number) => <UserPost location={location} key={idx} post={post} />) : <div>no posts</div>
       }
       
     </div>
@@ -57,7 +57,7 @@ const UserPost = ({ post,location }: { post: any,location : any }) => {
 
   useEffect(() => {
 
-    if (comments?.data.length > 0) {
+    if (comments?.data?.length > 0) {
       setShowComments(true);
     }
     
@@ -67,7 +67,7 @@ const UserPost = ({ post,location }: { post: any,location : any }) => {
 
     const arrayOfUrl = post?.url.split(".");
 
-    const lastelement = arrayOfUrl.at(-1);
+    const lastelement = arrayOfUrl?.at(-1);
 
     if (lastelement == "png" || lastelement == "jpg" || lastelement == "jpeg") {
       setIsPhoto(true);
