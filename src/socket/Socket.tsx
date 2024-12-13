@@ -11,7 +11,7 @@ export const getSocket = () => useContext(socketContext);
 export const SocketProvider = ({children} :{children : ReactNode}) => {
 
 
-    const socket  = useMemo(() => io("http://localhost:4000",{withCredentials : true,transports : ["websocket"],reconnectionAttempts : 10,reconnectionDelay : 1000,timeout : 1000}),[]);
+    const socket  = useMemo(() => io("https://social-media-backend-c9b2.onrender.com",{withCredentials : true,transports : ["websocket"],reconnectionAttempts : 10,reconnectionDelay : 1000,timeout : 1000}),[]);
 
     console.log(socket);
 
