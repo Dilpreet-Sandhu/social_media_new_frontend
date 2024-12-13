@@ -96,7 +96,7 @@ const UserPost = ({ post,location }: { post: any,location : any }) => {
     try {
       const data = await likePost({postId : post?._id});
 
-      console.log(data);
+    
       
     } catch (error) {
       console.log("error while liking post",error);

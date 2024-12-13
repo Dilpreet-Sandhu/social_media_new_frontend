@@ -104,6 +104,7 @@ const SignUpForm = ({
             placeholder="enter your password"
             name="password"
             label="password"
+            type={"password"}
           />
         ) 
         }</>

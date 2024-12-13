@@ -109,6 +109,9 @@ body {
     animation: widthAnimation linear forwards;
   }
 
+  .animate.reset {
+    animation : none;
+  }
   
 }
 

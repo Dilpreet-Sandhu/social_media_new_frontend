@@ -1,8 +1,9 @@
-import { useGetLikedPostIdsQuery, useLikePostMutation } from "@/redux/slices/apiSlice";
+import { useAddCommentMutation, useGetLikedPostIdsQuery, useLikePostMutation } from "@/redux/slices/apiSlice";
 import { Avatar } from "@mui/material";
 import {
   Bookmark,
   Heart,
+  Loader2,
   MessageCircle,
   MoreHorizontal,
   Share2Icon,
@@ -10,17 +11,27 @@ import {
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 
-const PostInfo = ({ post, comments }: { post: any; comments: any }) => {
+const PostInfo = ({ post, comments,handleAddComment }: { post: any; comments: any,handleAddComment : (comment : any) => void }) => {
   const [comment, setComment] = useState("");
-  const {data : likedposts} = useGetLikedPostIdsQuery();
+  const {data : likedposts,isFetching,isLoading} = useGetLikedPostIdsQuery();
+  const [createComment] = useAddCommentMutation();
   const [like,setLike] = useState(false);
+  const [likesCount,setLikesCount] = useState(0);
   const [likePost] = useLikePostMutation();
+  const [loading,setLoading] = useState(false);
+
   
   
   const alreadyLiked = useMemo(() => likedposts?.data.includes(post?._id),[likedposts]);
   useEffect(() => {
     setLike(alreadyLiked);
-  },[alreadyLiked])
+  },[alreadyLiked]);
+
+  useEffect(() => {
+      setLikesCount(post?.likesCount);
+  },[isFetching]);
+
+  
 
 
   async function handleLike() {
@@ -28,13 +39,42 @@ const PostInfo = ({ post, comments }: { post: any; comments: any }) => {
     setLike(prev => !prev);
 
     try {
+      if(alreadyLiked) {
+        setLikesCount(prev => prev--);
+      }else {
+        setLikesCount(prev => prev++);
+      }
       const data = await likePost({postId : post?._id});
 
-      console.log(data);
-      
+        console.log(data);
     } catch (error) {
       console.log("error while liking post",error);
       setLike(prev => !prev);
+    }
+
+  }
+
+ 
+
+  async function addComment() {
+
+    try {
+
+      setLoading(true);
+
+      const data = await createComment({postId : post?._id,comment,type : "post"});
+
+      handleAddComment(data?.data?.data);
+
+      setComment("");
+
+      setLoading(false);
+      
+    } catch (error) {
+      console.log('error while adding comment',error);
+      setLoading(false);
+    }finally {
+      setLoading(false);
     }
 
   }
@@ -59,7 +99,7 @@ const PostInfo = ({ post, comments }: { post: any; comments: any }) => {
       {/* commnets */}
       <div className="w-full h-[480px] ">
         {comments?.map((comment: any, idx: number) => {
-            console.log(comment);
+          
           const commentTime = moment().from(comment?.createdAt);
 
           return <Comment key={idx} comment={comment} commentTime={commentTime} />;
@@ -82,12 +122,17 @@ const PostInfo = ({ post, comments }: { post: any; comments: any }) => {
 
         <div className="w-full px-4 ">
           <p className="text-[14px] font-medium text-black/80">
-            {post?.likesCount} likes
+            {likesCount} likes
           </p>
           <p></p>
         </div>
 
-        <div className="w-full h-[50px]  border-t-[3px] flex  border-zinc-200">
+        <div className="">
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            addComment();
+          }} className="w-full h-[50px]  border-t-[3px] flex  border-zinc-200">
+
           <input
             value={comment}
             onChange={(e) => setComment(e.target.value)}
@@ -95,13 +140,15 @@ const PostInfo = ({ post, comments }: { post: any; comments: any }) => {
             placeholder="Add a comment..."
           />
 
-          <button
-            className={`w-[100px] h-full ${
+          <button 
+          disabled={loading}
+            className={`w-[100px] h-full flex items-center justify-center  ${
               comment.length > 0 ? "text-blue-800 font-bold" : "text-blue-400"
             }`}
           >
-            Post
+            {loading ? <Loader2/> : "Post" }
           </button>
+          </form>
         </div>
       </div>
     </div>

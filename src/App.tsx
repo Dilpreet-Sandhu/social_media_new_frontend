@@ -44,7 +44,7 @@ function App() {
           <Route path={"/explore"} element={<ExplorePage/>}/>
           <Route path="/reels" element={<Reels/>}/>
           <Route path="/messages/c/:chatId" element={<Messages/>}/>
-          <Route path="/stories" element={<Stories/>}/>
+          <Route path="/stories/:userId" element={<Stories/>}/>
         </Route>
         <Route
           path="/login"

@@ -62,6 +62,7 @@ const LoginForm = () => {
         name="password"
         placeholder="enter your password"
         label="password"
+        type={"password"}
       />
 
       <div className="mt-3">

@@ -1,4 +1,4 @@
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
 import { useGetSinglePostQuery } from "../redux/slices/apiSlice";
 import PostInfo from "../components/singlePost/PostInfo";
@@ -11,9 +11,17 @@ const FullViewPost = () => {
    const postId = params.postId;
    const navigate = useNavigate();
   
-    const {data,isLoading,isError} = useGetSinglePostQuery({postId : postId || ""});
+    const {data,isFetching,isLoading,isError} = useGetSinglePostQuery({postId : postId || ""});
 
- 
+    const [comments,setComments] = useState<any[]>([]);
+
+    function addNewComment(comment : any) {
+
+        if (comment) {
+          setComments(prev => [...prev,comment]);
+        }
+
+    }
 
     function handlePlay(e : MouseEvent<HTMLVideoElement>) {
 
@@ -27,6 +35,10 @@ const FullViewPost = () => {
     }
 
     const isImage = data?.data?.post?.url.split(".").at(-1) == "png" ? true : false;
+
+    useEffect(() => {
+      setComments(data?.data?.comments);
+    },[isFetching])
 
 
   return (
@@ -56,7 +68,7 @@ const FullViewPost = () => {
 
       </div>
 
-      <PostInfo post={data?.data?.post} comments={data?.data?.comments}/>
+      <PostInfo post={data?.data?.post} comments={comments} handleAddComment={addNewComment}/>
       
     </div>
   </div>

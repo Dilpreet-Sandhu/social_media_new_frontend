@@ -197,9 +197,23 @@ const api = createApi({
           credentials :"include"
       })
     }),
-    getMyStories : builder.query<any,void>({
+    getMyStories : builder.query<any,any>({
+      query : ({userId}) => ({
+        url : `/story/get/my/${userId}`,
+        method : 'GET',
+        credentials : "include"
+      })
+    }),
+    checkHasStories : builder.query<any,void>({
       query : () => ({
-        url : `/story/get/my`,
+        url : "/story/user/has/stories",
+        method  :"GET",
+        credentials : "include"
+      })
+    }),
+    getFollowingStories : builder.query<any,void>({
+      query : () => ({
+        url : "/story/users/having/stories",
         method : 'GET',
         credentials : "include"
       })
@@ -234,7 +248,9 @@ export const {
   useLogoutMutation,
   useCreatePostMutation,
   useUploadStoryMutation,
-  useGetMyStoriesQuery
+  useGetMyStoriesQuery,
+  useCheckHasStoriesQuery,
+  useGetFollowingStoriesQuery
 } = api;
 
 export default api;

@@ -9,6 +9,7 @@ interface InputAndLabelContainerProps {
     height ?: string;
     value ?: string;
     setValue ?: (e : ChangeEvent<HTMLInputElement>) => void;
+    type ?: String;
 }
 
 interface InputProps {
@@ -17,10 +18,11 @@ interface InputProps {
     width ?: string;
     value ?: string;
     setValue ?: (e : ChangeEvent<HTMLInputElement>) => void;
+    
 }
 
 
-export default function InputAndLabelContainer({label,placeholder,name,width,height,value,setValue } : InputAndLabelContainerProps) {
+export default function InputAndLabelContainer({label,placeholder,name,width,height,value,setValue ,type} : InputAndLabelContainerProps) {
 
     
 
@@ -29,7 +31,7 @@ export default function InputAndLabelContainer({label,placeholder,name,width,hei
             <label className="light-gray text-[13px] tracking-wider">
                 {label}
             </label>
-            <input value={value} onChange={(e) => setValue && setValue(e)} style={{width : width,height : height}} placeholder={placeholder} name={name} className="border-[2px] pl-3 light-gray block text-[14px] mt-[2px] placeholder:text-[15px]  w-[380px] rounded-lg h-[40px] border-[#dedede] outline-none "/>
+            <input type={type} value={value} onChange={(e) => setValue && setValue(e)} style={{width : width,height : height}} placeholder={placeholder} name={name} className="border-[2px] pl-3 light-gray block text-[14px] mt-[2px] placeholder:text-[15px]  w-[380px] rounded-lg h-[40px] border-[#dedede] outline-none "/>
         </div>
     )
 
