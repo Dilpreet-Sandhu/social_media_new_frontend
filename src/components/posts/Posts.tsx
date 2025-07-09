@@ -8,7 +8,7 @@ import Post from "./Post";
 
 
 const FeedPosts = ({location} : {location : any}) => {
-  const { data: userFeed, isLoading, isError ,error} = useGetUserFeedQuery();
+  const { data: userFeed, isLoading, isError } = useGetUserFeedQuery();
 
 
 
