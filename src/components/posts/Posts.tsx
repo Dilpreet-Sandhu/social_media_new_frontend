@@ -8,7 +8,7 @@ import Post from "./Post";
 
 
 const FeedPosts = ({location} : {location : any}) => {
-  const { data: userFeed, isLoading, isError } = useGetUserFeedQuery();
+  const { data: userFeed, isLoading, isError ,error} = useGetUserFeedQuery();
 
 
 
@@ -46,7 +46,7 @@ const UserPost = ({ post,location }: { post: any,location : any }) => {
   const [savePost] = useSavePostMutation();
   const [addCommentToPostApi] = useAddCommentMutation();
 
-
+  console.log("savedData" , savedIds?.data);
   const alreadyLiked = useMemo(() => likedposts?.data.includes(post?._id),[likedposts]);
   const alreadySaved = useMemo(() => savedIds?.data.includes(post?._id),[savedIds]);
 
